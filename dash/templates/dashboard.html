@@ -1,0 +1,202 @@
+{% extends 'base2.html' %}
+
+{% block title %}
+{{title}}
+{% endblock title %}
+
+{% block wb %}
+{% if user.is_authenticated %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/dashboard/myprofile/">DASHBOARD</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link active" aria-current="page" href="/dashboard/myprofile/">My Profile</a>
+        <a class="nav-link" href="/dashboard/myblogs/">My Blogs</a>
+        <a class="nav-link" href="/dashboard/dictionary/">Dictionary</a>
+        <a class="nav-link" href="/dashboard/news/">News</a>
+        {% if request.user.is_superuser %}
+        <a class="nav-link" href="/admin/">Admin Portal</a>
+        {% endif %}
+        <a class="nav-link" type="button" data-bs-toggle="modal" data-bs-target="#LogoutModal">Logout</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Logout Modal -->
+<div class="modal fade" id="LogoutModal" tabindex="-1" aria-labelledby="LogoutModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title mx-auto" id="LogoutModalLabel">Do you really want to logout ?</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-footer">
+        <a type="button" class="btn btn-grad2 mx-auto" href="/logout/">Yes</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Blog Modal -->
+<div class="modal fade" id="bigModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add your new blog</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="container w-75">
+          <form action="/dashboard/myblogs/addblog/" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <input type="text" name="title" class="form-control mb-3" placeholder="Enter the Title">
+            <textarea name="desc" class="form-control mb-3" placeholder="Enter the content"
+              style="height: 400px;"></textarea>
+            <input type="text" name="author" class="form-control mb-3" placeholder="Enter author's name">
+            <input type="file" name="image" class="mb-3">
+            <button type="submit" class="btn btn-grad2 mx-auto">Add</button>
+
+
+
+          </form>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% block dashboard %}
+
+{% endblock dashboard %}
+
+
+{% else %}
+
+
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>{{message}}</strong>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+{% endif %}
+
+<div class="container-fluid" style="background-color: grey;height: 50px;">
+  <div class="container">
+
+    <table>
+      <tr>
+        <td>
+          <h5 class="mx-3" style="color:white; padding-top: 10px;"> Already a member of ABlogs ? </h5>
+        </td>
+        <td class="pt-1"><a href="/login" class="btn btn-grad2" data-bs-toggle="offcanvas"
+            data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">LOGIN</a></td>
+        <td>
+          <h5 class="mx-3" style="color:white; padding-top: 10px;">Verify your account</h5>
+        </td>
+        <td class="pt-1"><a href="/dashboard/otpvalidation" class="btn btn-grad2">VERIFY</a></td>
+        <td>
+          <h5 class="mx-3" style="color:white; padding-top: 10px;">Forgot Password ?</h5>
+        </td>
+        <td class="pt-1"><a href="/reset_password" class="btn btn-grad2">Reset</a></td>
+
+      </tr>
+
+    </table>
+  </div>
+</div>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+  <div class="offcanvas-header">
+    <h5 id="offcanvasRightLabel">LOGIN</h5>
+    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+
+    <form action="/login/" method="post">{% csrf_token %}
+
+
+      <input type="text" class="form-control mb-2" placeholder="username" name="usernamelg">
+      <input type="password" class="form-control mb-2" placeholder="password" name="passwordlg">
+      <button type="submit" class="btn btn-grad2 mx-auto">Login</button>
+
+
+    </form>
+
+
+
+  </div>
+</div>
+
+
+<div class="container w-50" style=" box-shadow: 0 0 20px black;border-radius: 20px;margin-top: 100px;">
+  <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+    <div class="container loginpage ">
+      <h3 style="text-align: center;">SIGNUP</h3>
+      <div class="form-floating mb-3 ">
+        <input type="text" class="form-control" id="floatingInput1" placeholder="Enter your username" name="firstname">
+        <label for="floatingInput">First Name</label>
+      </div>
+
+      <div class="form-floating mb-3 ">
+        <input type="text" class="form-control" id="floatingInput2" placeholder="Enter your username" name="lastname">
+        <label for="floatingInput">Last Name</label>
+      </div>
+
+      <div class="form-floating mb-3 ">
+        <input type="email" class="form-control" id="floatingInput3" placeholder="Enter your username" name="email">
+        <label for="floatingInput">E-Mail</label>
+      </div>
+
+      <div class="form-floating">
+        <textarea class="form-control mb-3" placeholder="Leave a comment here" id="floatingTextarea2"
+          style="height: 100px" name="bio"></textarea>
+        <label for="floatingTextarea2">Bio</label>
+      </div>
+
+      <div class="input-group mb-3">
+        <label class="input-group-text" for="inputGroupFile01">Upload</label>
+        <input type="file" class="form-control" id="inputGroupFile01" name="dp">
+      </div>
+
+      <div class="form-floating mb-3 ">
+        <input type="text" class="form-control" id="floatingInput" placeholder="Enter your username" name="username">
+        <label for="floatingInput">Username</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
+        <label for="floatingPassword">Password</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="password" class="form-control" id="floatingPassword2" placeholder="Password" name="password2">
+        <label for="floatingPassword">Confirm Password</label>
+      </div>
+
+      <br><br>
+      <div class="d-grid gap-2 col-3 mx-auto mb-3">
+        <button type="submit" class="btn btn-grad2" formaction="">Signup</button>
+      </div>
+
+
+    </div>
+    <br><br>
+
+
+</div>
+</div>
+
+</div>
+{% endif %}
+{% endblock wb %}

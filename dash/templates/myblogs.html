@@ -1,0 +1,52 @@
+{% extends 'dashboard.html' %}
+{% block title %}
+My Blogs
+{% endblock title %}
+{% block dashboard %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>{{message}}</strong>
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+{% endif %}
+
+<br>
+<a class="btn btn-grad2 mx-auto" style="border-radius: 10px; width: 500px;" type="button"
+  href="/dashboard/myblogs/addblog/" data-bs-toggle="modal" data-bs-target="#bigModal">Add new Blog</a>
+
+<br><br>
+{% for blog in blogs %}
+<div class="container w-75">
+  <div class="card cardhover ">
+    <div class="card-header">
+      By You
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{blog.title}}</h5>
+      <p class="card-text">{{blog.desc|truncatechars:300}}</p>
+
+      <div class="dropdown">
+        <a class="btn btn-grad2 btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+          data-bs-toggle="dropdown" aria-expanded="false">
+          Options
+        </a>
+
+        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuLink">
+          <li><a class="dropdown-item" href="/blogs/{{blog.title}}">Read More</a></li>
+          <li><a class="dropdown-item" href="/dashboard/{{blog.title}}/editblog">Edit</a></li>
+          <li><a class="dropdown-item" href="/dashboard/{{blog.title}}/deleteblog">Delete</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card-footer text-muted">
+      {{blog.date}} - views <span>({{blog.views}})</span>
+    </div>
+  </div>
+</div><br><br>
+
+{% endfor %}
+<a class="btn btn-grad2 mx-auto" style="border-radius: 10px; width: 500px;" type="button"
+  href="/dashboard/myblogs/addblog/" data-bs-toggle="modal" data-bs-target="#bigModal">Add new Blog</a>
+{% endblock dashboard %}

@@ -1,0 +1,31 @@
+{% extends 'dashboard.html' %}
+{% block title %}
+Edit your profile 
+{% endblock title %}
+{% block dashboard %}
+<div class="container w-50"
+  style=" box-shadow: 0 0 20px black;border-radius: 20px;margin-top: 100px;text-align: center;">
+  <form action="" method="post"  enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <h3>Edit your profile</h3>
+    <div class="form-floating mb-3">
+      {{form.first_name}}
+      <label>First Name</label>
+    </div>
+    <div class="form-floating mb-3">
+      {{form.last_name}}
+      <label>Last Name</label>
+    </div>
+    <div class="form-floating mb-3">
+      {{form.bio}}
+      <label>Bio</label>
+    </div>
+
+    {{form.dp}}
+
+    <button class="btn btn-grad2" type="submit">update</button>
+    <br><br>
+  </form>
+</div>
+{% endblock dashboard %}

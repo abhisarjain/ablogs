@@ -1,0 +1,70 @@
+{% extends 'navbar.html' %}
+{% load  static %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid" id="bgimg">
+  {% if user.is_authenticated %}
+  <h1 id="welcome" style="font-family: Calibri;" class="mx-auto">WELCOME BACK</h1>
+  <h1 id="ablog" style="font-family: Calibri;"> {{ user.get_full_name }}</h1>
+
+
+  <a role="button" class="btn btn-grad" href="/dashboard/myprofile">Dashboard</a>
+  {% else %}
+  <h1 id="welcome" style="font-family: Calibri;">WELCOME TO</h1>
+  <h1 id="ablog" style="font-family: Brush Script MT;font-size: 40px;"> ABlogs</h1>
+  <a role="button" class="btn btn-grad" href="/dashboard">Get Started</a>
+  {% endif %}
+
+</div>
+<br><br>
+
+<h1 style="text-align: center;color: white;">Featured Blogs - Most Viewed</h1><br><br>
+{% for blog in blogs|slice:":1" %}
+<div class="container w-100 ">
+  <div class="card cardhover " style="min-height: 400px; ">
+    <div class="card-header">
+      By {{blog.author}} (@{{blog.user.username}})
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{blog.title|capfirst}}</h5>
+      <p class="card-text">{{blog.desc|truncatechars:1500}}</p>
+      <a href="/blogs/{{blog.title}}" class="btn btn-grad2 readmore" id="{{blog.title}}" style="width: 140px;">Read
+        More</a>
+    </div>
+    <div class="card-footer text-muted">
+      {{blog.date}} - views <span>({{blog.views}})</span>
+    </div>
+  </div>
+</div><br><br>
+
+{% endfor %}
+<div class="container">
+  <div class="row row-cols-1 row-cols-md-3 g-4 ">
+    {% for blog in blogs|slice:"1:7" %}
+    <div class="col">
+      <div class="card h-100 cardhover">
+
+        <div class="card-header">
+          By {{blog.author}} (@{{blog.user.username}})
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">{{blog.title|capfirst}}</h5>
+          <p class="card-text">{{blog.desc|truncatechars:100}}</p>
+          <a href="/blogs/{{blog.title}}" class="btn btn-grad2 readmore" id="{{blog.title}}" style="width: 140px;">Read
+            More</a>
+        </div>
+        <div class="card-footer text-muted">
+          {{blog.date}} - views <span>({{blog.views}})</span>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+<br><br><br>
+{% endblock %}

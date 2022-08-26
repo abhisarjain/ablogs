@@ -1,0 +1,38 @@
+{% extends 'base2.html' %}
+{% block title %}
+Search Results for "{{query}}"
+{% endblock title %}
+{% block wb %}
+<br><br>
+<h2 style="text-align:center">Search Results for "{{query}}"</h2>
+{% if blogs|length < 1 %}
+<p style="text-align:center">No Search Results</p>
+{% else %}
+
+<br><br>
+{% for blog in blogs %}
+<div class="container w-75">
+  <div class="card cardhover ">
+    <div class="card-header">
+      By {{blog.author}} (@{{blog.user.username}})
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{blog.title|capfirst}}</h5>
+      <p class="card-text">{{blog.desc|truncatechars:300}}</p>
+      <a href="/blogs/{{blog.title}}" class="btn btn-grad2 readmore" id="{{blog.title}}" style="width: 140px;">Read
+        More</a>
+    </div>
+    <div class="card-footer text-muted">
+      {{blog.date}} - views <span>({{blog.views}})</span>
+    </div>
+  </div>
+</div><br><br>
+
+{% endfor %}
+{% endif %}
+{% endblock wb %}
+
+{% block js %}
+<script>
+</script>
+{% endblock js %}

@@ -1,0 +1,96 @@
+{% extends 'base2.html' %}
+
+{% block title %}
+{% for blog in blogs %}
+{{blog.title}}
+{% endfor %}
+{% endblock title %}
+
+{% block wb %}
+<br>
+<div class="form-check form-switch ">
+  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" style="margin-left: 20px;">
+  <label class="form-check-label" for="flexSwitchCheckDefault">
+    <h4 class="mx-2" id="darkmodename"> DARK MODE</h4>
+  </label>
+</div>
+<br><br>
+<div class="container w-75" style="box-shadow: 0 0 20px black;background-color: white;color: black;" id="darkmode">
+  {% for blog in blogs %}
+  <div class="container">
+    <br>
+    <img src=" /media/{{blog.image}} " class="img-fluid" style="align-items: center;" alt=""><br><br>
+    <h2 style="text-align: center;">{{blog.title}} </h2><br>
+    <p>{{blog.desc}}</p>
+
+    {% if request.user.is_authenticated %}
+    <form action="" method="post" class="my-3">{% csrf_token %}
+
+      <div class="form-floating my-3">
+        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px" name="comment"></textarea>
+        <label for="floatingTextarea2">Add a Comment  </label>
+      </div>
+      <button type="submit" class="btn btn-grad2 mx-auto">Comment</button>
+
+    </form>
+
+    {% else %}
+
+    <div class="alert alert-warning" role="alert">
+      Please Login to Comment
+    </div>
+
+    {% endif %}
+
+
+
+
+
+    {% for c in comment  %}
+    
+    <div class="card my-3">
+      <div class="card-header">
+       By  {{c.user.get_full_name}}
+      </div>
+      <div class="card-body">
+        {% comment %} <h5 class="card-title">Special title treatment</h5> {% endcomment %}
+        <p class="card-text">{{c.comments}}</p>
+        
+      </div>
+      <div class="card-footer text-muted">
+        2 days ago
+      </div>
+    </div>
+    {% endfor %}
+   
+
+   
+
+
+    <br><br>
+  </div>
+</div>
+{% endfor %}
+{% endblock wb %}
+
+{% block js %}
+<script>
+  $('#flexSwitchCheckDefault').click(function () {
+    if ($(this).prop("checked") == true) {
+
+      $('#darkmode').css("background-color", "black")
+      $('#darkmodename').css("color", "white")
+      $('#darkmode').css("box-shadow", "0 0 30px white")
+      $('.mainbg').css("background-color", "black")
+      $('#darkmode').css("color", "white")
+    } else if ($(this).prop("checked") == false) {
+
+      $('#darkmode').css("background-color", "white")
+      $('#darkmodename').css("color", "black")
+      $('#darkmode').css("box-shadow", "0 0 20px black")
+      $('.mainbg').css("background-color", "white")
+      $('#darkmode').css("color", "black")
+    }
+  });
+</script>
+{% endblock js %}

@@ -1,0 +1,20 @@
+{% extends 'dashboard.html' %}
+{% block title %}
+Edit your blog
+{% endblock title %}
+{% block dashboard %}
+
+<div class="container w-75"
+    style=" box-shadow: 0 0 20px black;border-radius: 20px;margin-top: 100px;text-align: center;">
+    <br><br>
+    <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+
+        {{form.as_p}}
+
+        <button type="submit" class="btn btn-grad2">Update</button>
+
+    </form>
+    <br><br>
+</div>
+
+{% endblock %}

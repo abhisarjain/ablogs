@@ -1,0 +1,39 @@
+{% extends 'base2.html' %}
+{% block title %}
+Blogs
+{% endblock title %}
+{% block wb %}
+<div class="dropdown">
+  <a class="btn btn-grad2 btn-sm dropdown-toggle float-end" style="border-radius: 0px;" href="#" role="button"
+    id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+    Sort
+  </a>
+  <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuLink">
+    <li><a class="dropdown-item" href="/blogs/alphabetically/">Alphabetically</a></li>
+    <li><a class="dropdown-item" href="/blogs/newest/">Newest First</a></li>
+    <li><a class="dropdown-item" href="/blogs/mostviewed/">Most Viewed</a></li>
+  </ul>
+</div>
+<br><br>
+{% for blog in blogs %}
+<div class="container w-75">
+  <div class="card cardhover ">
+    <div class="card-header">
+      By {{blog.author}}  <a href="/aboutuser/{{blog.user.id}}"> (@{{blog.user.username}}) </a>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{blog.title}}</h5>
+      <p class="card-text">{{blog.desc|truncatechars:300}}</p>
+      <a href="/blogs/{{blog.title}}" class="btn btn-grad2 readmore" id="{{blog.title}}" style="width: 140px;">Read
+        More</a>
+    </div>
+    <div class="card-footer text-muted">
+      {{blog.date}} - views <span>({{blog.views}})</span>
+    </div>
+  </div>
+</div><br><br>
+
+{% endfor %}
+{% endblock wb %}
+{% block js %}
+{% endblock js %}

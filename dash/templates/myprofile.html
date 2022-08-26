@@ -1,0 +1,22 @@
+{% extends 'dashboard.html' %}
+{% block title %}
+My Profile
+{% endblock title %}
+{% block dashboard %}
+  
+
+<div class="container w-50" style=" box-shadow: 0 0 20px black;border-radius: 20px;margin-top: 100px;text-align: center;">
+<br><br>
+<img src="{{request.user.dp.url}}" class="myprofileimage" alt="">
+<h2>{{ request.user.get_full_name }}</h2>
+<h2>@{{request.user.get_username}}</h2>
+<h2>{{request.user.email}}</h2>
+<p>{{request.user.bio}}</p>
+
+<a href="/dashboard/myprofile/editprofile/" role="button" class="btn btn-grad2 mx-auto" style="width: 200px; " >Edit Profile</a><br>
+<a href="/dashboard/myprofile/changepassword/" role="button" class="btn btn-grad2 mx-auto" style="width: 200px;" >Change Password</a>
+
+<br><br>
+</div>
+
+{% endblock dashboard %}
