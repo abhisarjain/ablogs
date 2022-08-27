@@ -1,1 +1,1 @@
-web: waitress-serve --port=$PORT ablogs.wsgi:application
+web: guincorn ablogs.wsgi --log-file -
