@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ft3af=s^ini)ysqvkq5&t#xv7!a_j@oc0ycw3f4q^h2uk+c__@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['myablogs.herokuapp.com','localhost']
 
 
 # Application definition
